@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  e-cidade-web:
+    build:
+      context: .
+      dockerfile: docker-ecidade/Dockerfile
+    environment:
+      - DB_SERVIDOR=e-cidade-db
+    depends_on:
+      - "e-cidade-db"
+    networks: 
+      - production-network
+    ports:
+      - "8080:80"
+    volumes:
+     - ./app:/var/www/e-cidade
+
+  e-cidade-db:
+    build:
+      context: .
+      dockerfile: docker-postgres-ecidade/Dockerfile
+    networks: 
+      - production-network
+networks:
+  production-network:
+    driver: bridge
+  
+  
+      
